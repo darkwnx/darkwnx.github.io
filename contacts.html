@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты - ПромТехСофт | Свяжитесь с нами</title>
+    <meta name="description" content="Контакты компании ПромТехСофт. Закажите разработку ПО или 3D-моделирование.">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            border-color: #00d4aa;
+            outline: none;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .submit-btn {
+            background: #00d4aa;
+            color: #0a1628;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .info-card {
+            text-align: center;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .info-card h3 {
+            color: #00d4aa;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>ПромТехСофт</h1>
+                <p>Инженерные решения</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="services.html">Услуги</a></li>
+                <li><a href="about.html">О компании</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+            <div class="burger">☰</div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Свяжитесь с нами</h2>
+            <p>Обсудим ваш проект и найдем оптимальное решение</p>
+        </section>
+
+        <section>
+            <div class="contact-info">
+                <div class="info-card">
+                    <h3>📍 Адрес</h3>
+                    <p>г. Москва, ул. Инженерная, д. 15, офис 402</p>
+                </div>
+                <div class="info-card">
+                    <h3>📞 Телефон</h3>
+                    <p>+7 (495) 123-45-67</p>
+                    <p>+7 (926) 765-43-21</p>
+                </div>
+                <div class="info-card">
+                    <h3>✉️ Email</h3>
+                    <p>info@promtechsoft.ru</p>
+                    <p>sales@promtechsoft.ru</p>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h2>Оставить заявку</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Ваше имя *</label>
+                        <input type="text" id="name" name="name" required placeholder="Иван Петров">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required placeholder="example@mail.ru">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+7 (999) 000-00-00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="service">Интересующая услуга</label>
+                        <select id="service" name="service">
+                            <option value="">Выберите услугу</option>
+                            <option value="automation">Автоматизация производств</option>
+                            <option value="kompas">3D-моделирование в КОМПАС-3D</option>
+                            <option value="nx">Проектирование в Siemens NX</option>
+                            <option value="custom">Разработка ПО на заказ</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Сообщение</label>
+                        <textarea id="message" name="message" placeholder="Опишите вашу задачу..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Отправить заявку</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>ПромТехСофт</h4>
+                <p>Разработка ПО и 3D-моделирование</p>
+            </div>
+            <div class="footer-col">
+                <h4>Контакты</h4>
+                <p>📧 info@promtechsoft.ru</p>
+                <p>📞 +7 (495) 123-45-67</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 ПромТехСофт. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelector('.burger').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+        
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Спасибо! Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
