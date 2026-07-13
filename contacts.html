@@ -1,38 +1,7 @@
-<form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
-    <!-- Скрытое поле с ключом -->
-    <input type="hidden" name="access_key" value="a09e27da-242e-4ea9-9367-4e7fdaf9e82a">
-    
-    <div style="margin-bottom: 1rem;">
-        <label style="display: block; margin-bottom: 0.3rem; font-weight: 500;">Имя *</label>
-        <input type="text" name="name" required style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; font-family: inherit;">
-    </div>
-    
-    <div style="margin-bottom: 1rem;">
-        <label style="display: block; margin-bottom: 0.3rem; font-weight: 500;">Email *</label>
-        <input type="email" name="email" required style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; font-family: inherit;">
-    </div>
-    
-    <div style="margin-bottom: 1rem;">
-        <label style="display: block; margin-bottom: 0.3rem; font-weight: 500;">Телефон</label>
-        <input type="tel" name="phone" style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; font-family: inherit;">
-    </div>
-    
-    <div style="margin-bottom: 1rem;">
-        <label style="display: block; margin-bottom: 0.3rem; font-weight: 500;">Сообщение</label>
-        <textarea name="message" rows="4" style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; font-family: inherit;"></textarea>
-    </div>
-    
-    <!-- Защита от спама -->
-    <input type="checkbox" name="botcheck" style="display: none;">
-    
-    <button type="submit" class="btn btn-primary" style="width: 100%; cursor: pointer;">
-        Отправить заявку
-    </button>
+<form action="https://api.web3forms.com/submit" method="POST">
+  <input type="hidden" name="access_key" value="a09e27da-242e-4ea9-9367-4e7fdaf9e82a">
+  <input type="text" name="name" required>
+  <input type="email" name="email" required>
+  <textarea name="message" required></textarea>
+  <button type="submit">Submit</button>
 </form>
-
-<script>
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-        // Можно добавить редирект после отправки
-        // <input type="hidden" name="redirect" value="https://darkwnx.github.io/thanks.html">
-    });
-</script>
