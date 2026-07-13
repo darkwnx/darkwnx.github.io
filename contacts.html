@@ -24,15 +24,165 @@
     <!-- /Yandex.Metrika counter -->
 
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #0a1628;
+            --accent: #00d4aa;
+            --white: #ffffff;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --text-light: #636e72;
+            --radius: 16px;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --shadow-hover: 0 20px 40px rgba(0,0,0,0.15);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            line-height: 1.7;
+            color: #2d3436;
+            background: #f8fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Демо-плашка */
+        .demo-banner {
+            background: #ff6b6b;
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 999;
+        }
+
+        /* Шапка */
+        .header {
+            background: rgba(10, 22, 40, 0.9);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 0.8rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo-icon { font-size: 1.8rem; color: var(--accent); }
+        .logo h1 { font-size: 1.3rem; font-weight: 800; }
+        .logo h1 span { color: var(--accent); font-weight: 300; }
+        .tagline { font-size: 0.7rem; color: #94a3b8; letter-spacing: 1px; }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-menu a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            padding: 0.4rem 0;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: white;
+            border-bottom-color: var(--accent);
+        }
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .burger span {
+            width: 25px;
+            height: 2px;
+            background: white;
+            display: block;
+            transition: var(--transition);
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #0a1628, #1a2d47);
+            color: white;
+            padding: 6rem 0 3rem;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 212, 170, 0.1);
+            color: var(--accent);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid rgba(0, 212, 170, 0.2);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+
+        .hero .highlight {
+            background: linear-gradient(135deg, var(--accent), #00ffcc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            color: #cbd5e1;
+            max-width: 600px;
+            margin: 1rem auto 0;
+        }
+
+        /* Контактные карточки */
         .contact-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin-bottom: 3rem;
         }
-        
+
         .contact-card {
-            background: var(--white);
+            background: white;
             padding: 2rem;
             border-radius: var(--radius);
             text-align: center;
@@ -40,133 +190,85 @@
             border: 1px solid var(--gray-200);
             transition: var(--transition);
         }
-        
+
         .contact-card:hover {
             transform: translateY(-3px);
             box-shadow: var(--shadow-hover);
         }
-        
-        .contact-card-icon {
-            font-size: 2.5rem;
-            display: block;
-            margin-bottom: 0.8rem;
-        }
-        
-        .contact-card h3 {
-            color: var(--primary);
-            margin-bottom: 0.8rem;
-            font-size: 1.1rem;
-        }
-        
-        .contact-card p {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 0.3rem;
-        }
-        
-        .contact-card a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-        
-        .form-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: start;
-        }
-        
-        .form-container {
-            background: var(--white);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-        
-        .form-container h3 {
-            padding: 2rem 2rem 0;
-            text-align: center;
-            color: var(--primary);
-        }
-        
-        .form-container > p {
-            padding: 0 2rem;
-            text-align: center;
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-container iframe {
-            display: block;
-            width: 100%;
-            height: 750px;
-            border: none;
-        }
-        
-        .info-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        
-        .info-item {
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
-        }
-        
-        .info-item .icon {
-            font-size: 1.8rem;
-            flex-shrink: 0;
-            width: 45px;
-            text-align: center;
-        }
-        
-        .info-item strong {
-            display: block;
-            color: var(--primary);
-            margin-bottom: 0.2rem;
-        }
-        
-        .info-item p {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-        
-        .alert-box {
-            background: var(--gray-100);
-            padding: 1.5rem;
-            border-radius: var(--radius);
-            margin-top: 2rem;
-            text-align: center;
-        }
-        
-        .alert-box strong {
-            color: var(--accent);
-            font-size: 1.2rem;
-        }
-        
+
+        .contact-card-icon { font-size: 2.5rem; display: block; margin-bottom: 0.8rem; }
+        .contact-card h3 { color: var(--primary); margin-bottom: 0.8rem; font-size: 1.1rem; }
+        .contact-card p { color: var(--text-light); font-size: 0.9rem; margin-bottom: 0.3rem; }
+        .contact-card a { color: var(--accent); text-decoration: none; }
+
+        /* Карта */
         .map-wrapper {
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow);
-            margin-bottom: 3rem;
-        }
-        
-        #yandexMap {
-            width: 100%;
-            height: 400px;
         }
 
-        /* ========== МОДАЛЬНОЕ ОКНО ========== */
+        #yandexMap { width: 100%; height: 400px; }
+
+        /* CTA секция */
+        .cta-section {
+            background: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #00f0c8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4);
+        }
+
+        .btn-large {
+            padding: 1.2rem 3rem;
+            font-size: 1.2rem;
+        }
+
+        /* ========== МОДАЛЬНОЕ ОКНО С ФОРМОЙ ========== */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 22, 40, 0.85);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 22, 40, 0.9);
+            backdrop-filter: blur(15px);
             z-index: 2000;
             display: flex;
             align-items: center;
@@ -174,6 +276,7 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.4s ease;
+            padding: 20px;
         }
 
         .modal-overlay.active {
@@ -182,13 +285,13 @@
         }
 
         .modal {
-            background: var(--white);
-            padding: 3rem;
+            background: white;
             border-radius: 24px;
-            max-width: 480px;
-            width: 90%;
-            text-align: center;
-            transform: scale(0.8) translateY(20px);
+            width: 100%;
+            max-width: 640px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9) translateY(30px);
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
             position: relative;
@@ -198,7 +301,97 @@
             transform: scale(1) translateY(0);
         }
 
-        .modal-icon {
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            background: white;
+            border-radius: 24px 24px 0 0;
+            z-index: 1;
+        }
+
+        .modal-header h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+
+        .modal-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #e2e8f0;
+            background: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: #64748b;
+        }
+
+        .modal-close:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        .modal-body iframe {
+            display: block;
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+
+        /* ========== МОДАЛЬНОЕ ОКНО "СПАСИБО" ========== */
+        .thanks-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 22, 40, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .thanks-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .thanks-modal {
+            background: white;
+            padding: 3rem;
+            border-radius: 24px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.8);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .thanks-overlay.active .thanks-modal {
+            transform: scale(1);
+        }
+
+        .thanks-icon {
             width: 90px;
             height: 90px;
             background: linear-gradient(135deg, #00d4aa, #00ffcc);
@@ -217,31 +410,18 @@
             100% { transform: scale(1); }
         }
 
-        .modal-icon svg {
-            width: 45px;
-            height: 45px;
-            stroke: var(--primary);
-            stroke-width: 3;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .modal h3 {
+        .thanks-modal h3 {
             font-size: 1.8rem;
             color: var(--primary);
             margin-bottom: 0.8rem;
-            animation: fadeInUp 0.5s ease 0.3s both;
         }
 
-        .modal p {
+        .thanks-modal p {
             color: var(--text-light);
-            font-size: 1rem;
             margin-bottom: 1.8rem;
-            animation: fadeInUp 0.5s ease 0.4s both;
         }
 
-        .modal .btn-close {
+        .btn-close-thanks {
             background: var(--accent);
             color: var(--primary);
             border: none;
@@ -251,26 +431,23 @@
             font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
-            animation: fadeInUp 0.5s ease 0.5s both;
+            font-family: inherit;
         }
 
-        .modal .btn-close:hover {
+        .btn-close-thanks:hover {
             background: #00f0c8;
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4);
         }
 
-        .modal .confetti {
-            position: absolute;
-            pointer-events: none;
-        }
-
+        /* Конфетти */
         .confetti-piece {
             position: absolute;
             width: 10px;
             height: 10px;
             border-radius: 2px;
             animation: confettiFall 1.5s ease-out forwards;
+            pointer-events: none;
         }
 
         @keyframes confettiFall {
@@ -278,33 +455,81 @@
             100% { transform: translateY(300px) rotate(720deg); opacity: 0; }
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Футер */
+        .footer {
+            background: #051024;
+            color: #94a3b8;
+            padding: 4rem 0 1rem;
         }
 
-        @media (max-width: 768px) {
-            .form-section {
-                grid-template-columns: 1fr;
-            }
-            
-            .contact-cards {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .modal {
-                padding: 2rem;
-            }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
         }
-        
-        @media (max-width: 480px) {
-            .contact-cards {
-                grid-template-columns: 1fr;
+
+        .footer-col h4 { color: white; margin-bottom: 1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 0.5rem; }
+        .footer-col a { color: #94a3b8; text-decoration: none; }
+        .footer-col a:hover { color: var(--accent); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; }
+
+        /* Кнопка наверх */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .scroll-top.visible { opacity: 1; pointer-events: all; }
+
+        @media (max-width: 768px) {
+            .burger { display: flex; }
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: #0a1628;
+                flex-direction: column;
+                padding: 2rem;
+                text-align: center;
+                gap: 1rem;
             }
+            .nav-menu.active { display: flex; }
+            .hero h2 { font-size: 1.8rem; }
+            .contact-cards { grid-template-columns: repeat(2, 1fr); }
+            .modal { max-height: 95vh; }
+            .modal-body iframe { height: 500px; }
+        }
+
+        @media (max-width: 480px) {
+            .contact-cards { grid-template-columns: 1fr; }
+            .btn-large { padding: 1rem 2rem; font-size: 1rem; }
         }
     </style>
 </head>
 <body>
+    <!-- Шапка -->
     <header class="header" id="header">
         <div class="container">
             <nav class="navbar">
@@ -331,21 +556,24 @@
     </header>
 
     <main>
+        <!-- Демо-плашка -->
         <div class="demo-banner">
             ⚠️ Демонстрационный сайт. Компания не является реальным юридическим лицом. Учебный проект.
         </div>
 
-        <section class="hero" style="min-height: auto; padding: 6rem 0 3rem;">
+        <!-- Hero -->
+        <section class="hero">
             <div class="container">
-                <span class="badge fade-in">📞 Свяжитесь с нами</span>
-                <h2 class="fade-in">Контакты</h2>
-                <p class="fade-in">Обсудим ваш проект и найдем оптимальное решение</p>
+                <span class="badge">📞 Свяжитесь с нами</span>
+                <h2>Контакты</h2>
+                <p>Обсудим ваш проект и найдем оптимальное решение</p>
             </div>
         </section>
 
+        <!-- Контактная информация -->
         <section style="padding: 3rem 0;">
             <div class="container">
-                <div class="contact-cards fade-in">
+                <div class="contact-cards">
                     <div class="contact-card">
                         <span class="contact-card-icon">📍</span>
                         <h3>Адрес</h3>
@@ -373,92 +601,53 @@
             </div>
         </section>
 
+        <!-- Карта -->
         <section style="padding: 0 0 3rem;">
             <div class="container">
-                <div class="map-wrapper fade-in">
+                <div class="map-wrapper">
                     <div id="yandexMap"></div>
                 </div>
             </div>
         </section>
 
-        <section style="background: var(--white); padding: 3rem 0;">
+        <!-- CTA: Кнопка открытия формы -->
+        <section class="cta-section">
             <div class="container">
-                <div class="form-section fade-in">
-                    <div class="form-container">
-                        <h3>Оставить заявку</h3>
-                        <p>Заполните форму, и мы свяжемся с вами в течение 2 часов</p>
-                        
-                        <iframe id="googleForm" src="https://docs.google.com/forms/d/e/1FAIpQLSecd_2opjvhv7uQhgDBlAlqW1Lt7-i7pumOCbQkP0hyyz7czQ/viewform?embedded=true">
-                            Загрузка…
-                        </iframe>
-                    </div>
-                    
-                    <div>
-                        <h3 style="color: var(--primary); margin-bottom: 1.5rem;">Почему стоит обратиться к нам</h3>
-                        
-                        <div class="info-list">
-                            <div class="info-item">
-                                <span class="icon">⚡</span>
-                                <div>
-                                    <strong>Быстрый ответ</strong>
-                                    <p>Отвечаем в течение 2 часов в рабочее время</p>
-                                </div>
-                            </div>
-                            <div class="info-item">
-                                <span class="icon">🎯</span>
-                                <div>
-                                    <strong>Индивидуальный подход</strong>
-                                    <p>Подбираем решение под ваши задачи и бюджет</p>
-                                </div>
-                            </div>
-                            <div class="info-item">
-                                <span class="icon">📋</span>
-                                <div>
-                                    <strong>Бесплатная консультация</strong>
-                                    <p>Анализируем задачу и предлагаем варианты</p>
-                                </div>
-                            </div>
-                            <div class="info-item">
-                                <span class="icon">🔒</span>
-                                <div>
-                                    <strong>Конфиденциальность</strong>
-                                    <p>Подписываем NDA, гарантируем защиту данных</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="alert-box">
-                            <h4 style="margin-bottom: 0.5rem;">🚀 Срочный проект?</h4>
-                            <p style="color: var(--text-light);">
-                                Звоните напрямую:<br>
-                                <strong>+7 (473) 200-00-00</strong>
-                            </p>
-                        </div>
-
-                        <!-- Кнопка для демонстрации модального окна -->
-                        <button onclick="openThankYouModal()" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem; cursor: pointer; justify-content: center;">
-                            🎉 Демо: Показать окно "Спасибо"
-                        </button>
-                    </div>
-                </div>
+                <h2>Готовы обсудить проект?</h2>
+                <p>Нажмите кнопку ниже, чтобы заполнить форму заявки. Мы свяжемся с вами в течение 2 часов.</p>
+                <button class="btn btn-primary btn-large" onclick="openFormModal()">
+                    ✍️ Оставить заявку
+                </button>
             </div>
         </section>
     </main>
 
-    <!-- МОДАЛЬНОЕ ОКНО "СПАСИБО" -->
-    <div class="modal-overlay" id="thankYouModal">
+    <!-- МОДАЛЬНОЕ ОКНО С ФОРМОЙ -->
+    <div class="modal-overlay" id="formModal">
         <div class="modal">
-            <div class="modal-icon">
-                <svg viewBox="0 0 24 24">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
+            <div class="modal-header">
+                <h3>Оставить заявку</h3>
+                <button class="modal-close" onclick="closeFormModal()">✕</button>
             </div>
-            <h3>Спасибо за заявку!</h3>
-            <p>Мы получили ваше сообщение и свяжемся с вами в ближайшее время. Обычно это занимает не более 2 часов.</p>
-            <button class="btn-close" onclick="closeThankYouModal()">Отлично!</button>
+            <div class="modal-body">
+                <iframe id="googleFormFrame" src="" width="100%" height="600" frameborder="0">
+                    Загрузка формы…
+                </iframe>
+            </div>
         </div>
     </div>
 
+    <!-- МОДАЛЬНОЕ ОКНО "СПАСИБО" -->
+    <div class="thanks-overlay" id="thanksModal">
+        <div class="thanks-modal">
+            <div class="thanks-icon">✓</div>
+            <h3>Спасибо за заявку!</h3>
+            <p>Мы получили ваше сообщение и свяжемся с вами в ближайшее время. Обычно это занимает не более 2 часов.</p>
+            <button class="btn-close-thanks" onclick="closeThanksModal()">Отлично!</button>
+        </div>
+    </div>
+
+    <!-- Футер -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -493,7 +682,7 @@
     <script src="https://api-maps.yandex.ru/2.1/?apikey=ef835738-e8f3-4b3b-853a-b0b6c0dcfc47&lang=ru_RU" type="text/javascript"></script>
     
     <script>
-        // Инициализация карты
+        // Карта
         function initMap() {
             var myMap = new ymaps.Map("yandexMap", {
                 center: [51.660781, 39.200296],
@@ -505,7 +694,7 @@
                 [51.660781, 39.200296],
                 {
                     hintContent: 'ПромТехСофт',
-                    balloonContent: '<div style="padding:10px;"><strong>ПромТехСофт</strong><br>Разработка ПО и 3D-моделирование<br>📍 Воронеж, Плехановская, 11</div>'
+                    balloonContent: '<div style="padding:10px;"><strong>ПромТехСофт</strong><br>📍 Воронеж, Плехановская, 11</div>'
                 },
                 {
                     iconLayout: 'default#image',
@@ -520,36 +709,68 @@
         
         ymaps.ready(initMap);
 
-        // ========== МОДАЛЬНОЕ ОКНО ==========
-        function openThankYouModal() {
-            document.getElementById('thankYouModal').classList.add('active');
+        // ========== МОДАЛЬНЫЕ ОКНА ==========
+        const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSecd_2opjvhv7uQhgDBlAlqW1Lt7-i7pumOCbQkP0hyyz7czQ/viewform?embedded=true';
+
+        // Открыть форму
+        function openFormModal() {
+            const modal = document.getElementById('formModal');
+            const iframe = document.getElementById('googleFormFrame');
+            
+            // Загружаем форму только при открытии
+            if (!iframe.src) {
+                iframe.src = FORM_URL;
+            }
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Закрыть форму
+        function closeFormModal() {
+            document.getElementById('formModal').classList.remove('active');
+            document.body.style.overflow = '';
+            
+            // Показываем "Спасибо" после закрытия формы
+            setTimeout(() => {
+                openThanksModal();
+            }, 300);
+        }
+
+        // Открыть "Спасибо"
+        function openThanksModal() {
+            document.getElementById('thanksModal').classList.add('active');
             document.body.style.overflow = 'hidden';
             createConfetti();
         }
 
-        function closeThankYouModal() {
-            document.getElementById('thankYouModal').classList.remove('active');
+        // Закрыть "Спасибо"
+        function closeThanksModal() {
+            document.getElementById('thanksModal').classList.remove('active');
             document.body.style.overflow = '';
             removeConfetti();
         }
 
         // Закрытие по клику на фон
-        document.getElementById('thankYouModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeThankYouModal();
-            }
+        document.getElementById('formModal').addEventListener('click', function(e) {
+            if (e.target === this) closeFormModal();
+        });
+
+        document.getElementById('thanksModal').addEventListener('click', function(e) {
+            if (e.target === this) closeThanksModal();
         });
 
         // Закрытие по Escape
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                closeThankYouModal();
+                closeFormModal();
+                closeThanksModal();
             }
         });
 
         // Конфетти
         function createConfetti() {
-            const modal = document.querySelector('#thankYouModal .modal');
+            const modal = document.querySelector('#thanksModal .thanks-modal');
             const colors = ['#00d4aa', '#ff6b6b', '#ffd93d', '#6c5ce7', '#a29bfe', '#fd79a8'];
             
             for (let i = 0; i < 40; i++) {
@@ -567,8 +788,24 @@
         function removeConfetti() {
             document.querySelectorAll('.confetti-piece').forEach(el => el.remove());
         }
+
+        // ========== Бургер-меню ==========
+        const burger = document.getElementById('burger');
+        const navMenu = document.getElementById('navMenu');
+        
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // ========== Кнопка наверх ==========
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollTopBtn.classList.toggle('visible', window.scrollY > 500);
+        });
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     </script>
-    
-    <script src="main.js"></script>
 </body>
 </html>
