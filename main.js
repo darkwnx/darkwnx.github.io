@@ -1,6 +1,5 @@
-// Навигация
 document.addEventListener('DOMContentLoaded', () => {
-    // Бургер-меню
+    // ========== БУРГЕР-МЕНЮ ==========
     const burger = document.getElementById('burger');
     const navMenu = document.getElementById('navMenu');
     
@@ -10,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
     });
 
-    // Закрытие меню при клике на ссылку
     navMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             burger.classList.remove('active');
@@ -19,13 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Шапка при скролле
+    // ========== ШАПКА ПРИ СКРОЛЛЕ ==========
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
         header.classList.toggle('scrolled', window.scrollY > 50);
     });
 
-    // Кнопка наверх
+    // ========== КНОПКА НАВЕРХ ==========
     const scrollTopBtn = document.getElementById('scrollTop');
     window.addEventListener('scroll', () => {
         scrollTopBtn.classList.toggle('visible', window.scrollY > 500);
@@ -34,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Анимации появления
+    // ========== АНИМАЦИИ ПОЯВЛЕНИЯ ==========
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -46,56 +44,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // Закрытие по Escape
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
-            burger.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    });
-});
-// Модальное окно с Google Формой
-document.addEventListener('DOMContentLoaded', function() {
+    // ========== МОДАЛЬНОЕ ОКНО С GOOGLE ФОРМОЙ ==========
     const modal = document.getElementById('applicationModal');
     const closeBtn = document.querySelector('.close-modal');
     
-    // Функция для открытия модального окна
     function openApplicationModal() {
         if (modal) {
             modal.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Блокируем прокрутку страницы
+            document.body.style.overflow = 'hidden';
         }
     }
     
-    // Функция для закрытия модального окна
     function closeApplicationModal() {
         if (modal) {
             modal.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Возвращаем прокрутку
+            document.body.style.overflow = 'auto';
         }
     }
     
-    // Закрытие по клику на крестик
     if (closeBtn) {
         closeBtn.addEventListener('click', closeApplicationModal);
     }
     
-    // Закрытие по клику вне модального окна
     window.addEventListener('click', function(event) {
         if (event.target === modal) {
             closeApplicationModal();
         }
     });
     
-    // Закрытие по нажатию клавиши Escape
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && modal.style.display === 'block') {
-            closeApplicationModal();
-        }
-    });
-    
-    // Привязываем функцию открытия к кнопке "Подать заявление" в контактах
+    // Привязываем кнопку "Подать заявление"
     const contactSection = document.querySelector('#contact');
     if (contactSection) {
         const applyButton = contactSection.querySelector('.btn');
@@ -106,4 +83,18 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
+
+    // ========== ЗАКРЫТИЕ ПО ESCAPE ==========
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (navMenu.classList.contains('active')) {
+                burger.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            if (modal && modal.style.display === 'block') {
+                closeApplicationModal();
+            }
+        }
+    });
 });
