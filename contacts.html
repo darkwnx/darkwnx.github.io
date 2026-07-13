@@ -7,8 +7,22 @@
     <meta name="description" content="Свяжитесь с ПромТехСофт в Воронеже для заказа разработки ПО или 3D-моделирования. Адрес, телефон, форма обратной связи.">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="animations.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=110703368', 'ym');
+        ym(110703368, 'init', {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/110703368" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
     <style>
         .contact-cards {
             display: grid;
@@ -143,7 +157,132 @@
             width: 100%;
             height: 400px;
         }
-        
+
+        /* ========== МОДАЛЬНОЕ ОКНО ========== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 22, 40, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 24px;
+            max-width: 480px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.8) translateY(20px);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #00d4aa, #00ffcc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 3rem;
+            animation: iconPop 0.6s ease 0.2s both;
+        }
+
+        @keyframes iconPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .modal-icon svg {
+            width: 45px;
+            height: 45px;
+            stroke: var(--primary);
+            stroke-width: 3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .modal h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            animation: fadeInUp 0.5s ease 0.3s both;
+        }
+
+        .modal p {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-bottom: 1.8rem;
+            animation: fadeInUp 0.5s ease 0.4s both;
+        }
+
+        .modal .btn-close {
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            padding: 0.9rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            animation: fadeInUp 0.5s ease 0.5s both;
+        }
+
+        .modal .btn-close:hover {
+            background: #00f0c8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4);
+        }
+
+        .modal .confetti {
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            animation: confettiFall 1.5s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(300px) rotate(720deg); opacity: 0; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 768px) {
             .form-section {
                 grid-template-columns: 1fr;
@@ -151,6 +290,10 @@
             
             .contact-cards {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .modal {
+                padding: 2rem;
             }
         }
         
@@ -160,19 +303,6 @@
             }
         }
     </style>
-        <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function(m,e,t,r,i,k,a){
-            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();
-            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=110703368', 'ym');
-
-        ym(110703368, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/110703368" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
 </head>
 <body>
     <header class="header" id="header">
@@ -201,7 +331,10 @@
     </header>
 
     <main>
-        <!-- Hero -->
+        <div class="demo-banner">
+            ⚠️ Демонстрационный сайт. Компания не является реальным юридическим лицом. Учебный проект.
+        </div>
+
         <section class="hero" style="min-height: auto; padding: 6rem 0 3rem;">
             <div class="container">
                 <span class="badge fade-in">📞 Свяжитесь с нами</span>
@@ -210,7 +343,6 @@
             </div>
         </section>
 
-        <!-- Контактная информация -->
         <section style="padding: 3rem 0;">
             <div class="container">
                 <div class="contact-cards fade-in">
@@ -222,7 +354,7 @@
                     <div class="contact-card">
                         <span class="contact-card-icon">📞</span>
                         <h3>Телефон</h3>
-                        <p><a href="tel:+79304019362">+7 (930) 401-93-62</a></p>
+                        <p><a href="tel:+74732000000">+7 (473) 200-00-00</a></p>
                         <p><a href="tel:+79200000000">+7 (920) 000-00-00</a></p>
                     </div>
                     <div class="contact-card">
@@ -241,7 +373,6 @@
             </div>
         </section>
 
-        <!-- Карта -->
         <section style="padding: 0 0 3rem;">
             <div class="container">
                 <div class="map-wrapper fade-in">
@@ -250,7 +381,6 @@
             </div>
         </section>
 
-        <!-- Форма + Информация -->
         <section style="background: var(--white); padding: 3rem 0;">
             <div class="container">
                 <div class="form-section fade-in">
@@ -258,7 +388,7 @@
                         <h3>Оставить заявку</h3>
                         <p>Заполните форму, и мы свяжемся с вами в течение 2 часов</p>
                         
-                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSecd_2opjvhv7uQhgDBlAlqW1Lt7-i7pumOCbQkP0hyyz7czQ/viewform?embedded=true">
+                        <iframe id="googleForm" src="https://docs.google.com/forms/d/e/1FAIpQLSecd_2opjvhv7uQhgDBlAlqW1Lt7-i7pumOCbQkP0hyyz7czQ/viewform?embedded=true">
                             Загрузка…
                         </iframe>
                     </div>
@@ -301,14 +431,33 @@
                             <h4 style="margin-bottom: 0.5rem;">🚀 Срочный проект?</h4>
                             <p style="color: var(--text-light);">
                                 Звоните напрямую:<br>
-                                <strong>+7 (930) 401-93-62</strong>
+                                <strong>+7 (473) 200-00-00</strong>
                             </p>
                         </div>
+
+                        <!-- Кнопка для демонстрации модального окна -->
+                        <button onclick="openThankYouModal()" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem; cursor: pointer; justify-content: center;">
+                            🎉 Демо: Показать окно "Спасибо"
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
     </main>
+
+    <!-- МОДАЛЬНОЕ ОКНО "СПАСИБО" -->
+    <div class="modal-overlay" id="thankYouModal">
+        <div class="modal">
+            <div class="modal-icon">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <h3>Спасибо за заявку!</h3>
+            <p>Мы получили ваше сообщение и свяжемся с вами в ближайшее время. Обычно это занимает не более 2 часов.</p>
+            <button class="btn-close" onclick="closeThankYouModal()">Отлично!</button>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="container">
@@ -328,26 +477,23 @@
                 <div class="footer-col">
                     <h4>Контакты</h4>
                     <p>📍 Воронеж, Плехановская, 11</p>
-                    <p>📞 +7 (930) 401-93-62</p>
+                    <p>📞 +7 (473) 200-00-00</p>
                     <p>✉️ info@promtechsoft.ru</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2024 <strong>ПромТехСофт</strong>. Все права защищены.</p>
+                <p>© 2024 <strong>ПромТехСофт</strong>. Демонстрационный сайт.</p>
             </div>
         </div>
-        <div style="background: #ff6b6b; color: white; text-align: center; padding: 0.5rem; font-size: 0.85rem;">
-        ⚠️ Демонстрационный сайт. Компания не является реальным юридическим лицом. Учебный проект.
-        </div>
     </footer>
-    
 
     <button class="scroll-top" id="scrollTop" aria-label="Наверх">↑</button>
 
-    <!-- Яндекс.Карты с вашим API-ключом -->
+    <!-- Яндекс.Карты -->
     <script src="https://api-maps.yandex.ru/2.1/?apikey=ef835738-e8f3-4b3b-853a-b0b6c0dcfc47&lang=ru_RU" type="text/javascript"></script>
     
     <script>
+        // Инициализация карты
         function initMap() {
             var myMap = new ymaps.Map("yandexMap", {
                 center: [51.660781, 39.200296],
@@ -359,25 +505,11 @@
                 [51.660781, 39.200296],
                 {
                     hintContent: 'ПромТехСофт',
-                    balloonContent: `
-                        <div style="font-family: 'Inter', sans-serif; padding: 10px;">
-                            <strong style="font-size: 16px; color: #0a1628;">ПромТехСофт</strong><br>
-                            <p style="margin: 5px 0; color: #636e72;">Разработка ПО и 3D-моделирование</p>
-                            <p style="margin: 5px 0;">📍 г. Воронеж, ул. Плехановская, д. 11</p>
-                            <p style="margin: 5px 0;">📞 +7 (930) 401-93-62</p>
-                            <p style="margin: 5px 0;">✉️ info@promtechsoft.ru</p>
-                        </div>
-                    `
+                    balloonContent: '<div style="padding:10px;"><strong>ПромТехСофт</strong><br>Разработка ПО и 3D-моделирование<br>📍 Воронеж, Плехановская, 11</div>'
                 },
                 {
                     iconLayout: 'default#image',
-                    iconImageHref: 'data:image/svg+xml;base64,' + btoa(`
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" viewBox="0 0 40 50">
-                            <path d="M20 0C8.95 0 0 8.95 0 20c0 15 20 30 20 30s20-15 20-30C40 8.95 31.05 0 20 0z" fill="#00d4aa" stroke="#0a1628" stroke-width="2"/>
-                            <circle cx="20" cy="20" r="8" fill="white"/>
-                            <text x="20" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#0a1628">◇</text>
-                        </svg>
-                    `),
+                    iconImageHref: 'data:image/svg+xml;base64,' + btoa('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" viewBox="0 0 40 50"><path d="M20 0C8.95 0 0 8.95 0 20c0 15 20 30 20 30s20-15 20-30C40 8.95 31.05 0 20 0z" fill="#00d4aa" stroke="#0a1628" stroke-width="2"/><circle cx="20" cy="20" r="8" fill="white"/></svg>'),
                     iconImageSize: [40, 50],
                     iconImageOffset: [-20, -50]
                 }
@@ -387,6 +519,54 @@
         }
         
         ymaps.ready(initMap);
+
+        // ========== МОДАЛЬНОЕ ОКНО ==========
+        function openThankYouModal() {
+            document.getElementById('thankYouModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            createConfetti();
+        }
+
+        function closeThankYouModal() {
+            document.getElementById('thankYouModal').classList.remove('active');
+            document.body.style.overflow = '';
+            removeConfetti();
+        }
+
+        // Закрытие по клику на фон
+        document.getElementById('thankYouModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeThankYouModal();
+            }
+        });
+
+        // Закрытие по Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeThankYouModal();
+            }
+        });
+
+        // Конфетти
+        function createConfetti() {
+            const modal = document.querySelector('#thankYouModal .modal');
+            const colors = ['#00d4aa', '#ff6b6b', '#ffd93d', '#6c5ce7', '#a29bfe', '#fd79a8'];
+            
+            for (let i = 0; i < 40; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.top = Math.random() * 50 + '%';
+                piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDelay = Math.random() * 1 + 's';
+                piece.style.animationDuration = (Math.random() * 1.5 + 1) + 's';
+                modal.appendChild(piece);
+            }
+        }
+
+        function removeConfetti() {
+            document.querySelectorAll('.confetti-piece').forEach(el => el.remove());
+        }
     </script>
     
     <script src="main.js"></script>
