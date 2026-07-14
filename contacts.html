@@ -157,7 +157,7 @@
         .btn-primary { background: var(--accent); color: var(--primary); box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3); }
         .btn-primary:hover { background: #00f0c8; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4); }
 
-        /* МОДАЛЬНОЕ ОКНО - ИСПРАВЛЕННОЕ ЦЕНТРИРОВАНИЕ */
+        /* МОДАЛЬНОЕ ОКНО */
         .modal-overlay {
             position: fixed;
             top: 0; 
@@ -172,13 +172,18 @@
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.3s ease;
             padding: 20px;
         }
 
         .modal-overlay.active { 
             opacity: 1; 
             pointer-events: all; 
+        }
+
+        .modal-overlay.closing {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .modal {
@@ -190,15 +195,23 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            transform: scale(0.9) translateY(30px);
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.7) translateY(40px);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        opacity 0.3s ease;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
             position: relative;
-            margin: auto; /* Дополнительное центрирование */
+            margin: auto;
         }
 
         .modal-overlay.active .modal { 
             transform: scale(1) translateY(0); 
+            opacity: 1;
+        }
+
+        .modal-overlay.closing .modal {
+            transform: scale(0.7) translateY(40px);
+            opacity: 0;
         }
 
         .modal-header {
@@ -223,11 +236,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             color: var(--gray-500);
         }
 
-        .modal-close:hover { background: var(--gray-100); transform: rotate(90deg); }
+        .modal-close:hover { 
+            background: #ff4757; 
+            color: white;
+            border-color: #ff4757;
+            transform: rotate(90deg); 
+        }
 
         .modal-body {
             flex-grow: 1;
@@ -265,16 +283,13 @@
 
         .success-animation.show {
             display: flex;
-            animation: successFadeIn 0.6s ease-out;
+            animation: successContainerIn 0.5s ease-out;
         }
 
-        @keyframes successFadeIn {
+        @keyframes successContainerIn {
             0% {
                 opacity: 0;
-                transform: scale(0.8);
-            }
-            50% {
-                transform: scale(1.05);
+                transform: scale(0.9);
             }
             100% {
                 opacity: 1;
@@ -291,19 +306,16 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 2rem;
-            animation: successPulse 1s ease-out 0.3s both;
+            animation: iconPopIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.2s both;
         }
 
-        @keyframes successPulse {
+        @keyframes iconPopIn {
             0% {
-                transform: scale(0);
+                transform: scale(0) rotate(-180deg);
                 opacity: 0;
             }
-            50% {
-                transform: scale(1.1);
-            }
             100% {
-                transform: scale(1);
+                transform: scale(1) rotate(0deg);
                 opacity: 1;
             }
         }
@@ -314,16 +326,16 @@
             stroke: white;
             stroke-width: 3;
             fill: none;
-            animation: checkDraw 0.6s ease-out 0.6s both;
         }
 
-        @keyframes checkDraw {
-            0% {
-                stroke-dasharray: 50;
-                stroke-dashoffset: 50;
-            }
-            100% {
-                stroke-dasharray: 50;
+        .success-icon svg polyline {
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: drawCheck 0.5s ease-out 0.6s forwards;
+        }
+
+        @keyframes drawCheck {
+            to {
                 stroke-dashoffset: 0;
             }
         }
@@ -333,7 +345,9 @@
             font-weight: 800;
             color: var(--primary);
             margin-bottom: 1rem;
-            animation: textSlideUp 0.5s ease-out 0.8s both;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUpFadeIn 0.5s ease-out 0.8s forwards;
         }
 
         .success-message {
@@ -341,15 +355,13 @@
             color: var(--text-light);
             max-width: 400px;
             line-height: 1.6;
-            animation: textSlideUp 0.5s ease-out 1s both;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUpFadeIn 0.5s ease-out 1s forwards;
         }
 
-        @keyframes textSlideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
+        @keyframes slideUpFadeIn {
+            to {
                 opacity: 1;
                 transform: translateY(0);
             }
@@ -365,14 +377,16 @@
             font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: var(--transition);
-            animation: textSlideUp 0.5s ease-out 1.2s both;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUpFadeIn 0.5s ease-out 1.2s forwards;
             font-family: inherit;
         }
 
         .success-close-btn:hover {
             background: #00f0c8;
-            transform: translateY(-2px);
+            transform: translateY(-2px) !important;
             box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4);
         }
 
@@ -584,12 +598,15 @@
         
         ymaps.ready(initMap);
 
-        // Открытие модального окна с формой
+        // Открытие модального окна с анимацией
         function openFormModal() {
             const modal = document.getElementById('formModal');
             const modalBody = document.getElementById('modalBody');
             const successAnimation = document.getElementById('successAnimation');
             const modalTitle = document.getElementById('modalTitle');
+            
+            // Убираем класс closing, если он есть
+            modal.classList.remove('closing');
             
             // Скрываем анимацию успеха, если она была показана
             successAnimation.classList.remove('show');
@@ -597,7 +614,7 @@
             // Восстанавливаем заголовок
             modalTitle.textContent = '📋 Заполните заявку';
             
-            // Очищаем контейнер
+            // Очищаем контейнер от старого iframe
             const existingIframe = modalBody.querySelector('iframe');
             if (existingIframe) {
                 existingIframe.remove();
@@ -611,13 +628,14 @@
             iframe.style.height = '65vh';
             iframe.style.minHeight = '500px';
             iframe.style.border = 'none';
+            iframe.style.display = 'block';
             iframe.setAttribute('frameborder', '0');
             iframe.setAttribute('allowfullscreen', 'true');
             
             // Вставляем iframe перед success-animation
             modalBody.insertBefore(iframe, successAnimation);
             
-            // Показываем модальное окно
+            // Показываем модальное окно с анимацией
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
             
@@ -625,35 +643,47 @@
             startFormSubmitDetection(iframe);
         }
 
-        // Закрытие модального окна
+        // Закрытие модального окна с анимацией
         function closeFormModal() {
             const modal = document.getElementById('formModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
             
-            // Небольшая задержка перед очисткой, чтобы анимация закрытия прошла
+            // Добавляем класс closing для анимации закрытия
+            modal.classList.add('closing');
+            modal.classList.remove('active');
+            
+            // Ждем окончания анимации перед разблокировкой скролла
             setTimeout(() => {
+                modal.classList.remove('closing');
+                document.body.style.overflow = '';
+                
+                // Очищаем анимацию успеха после полного закрытия
                 const successAnimation = document.getElementById('successAnimation');
                 successAnimation.classList.remove('show');
-            }, 400);
+                
+                // Восстанавливаем заголовок
+                const modalTitle = document.getElementById('modalTitle');
+                modalTitle.textContent = '📋 Заполните заявку';
+                
+                // Показываем iframe обратно для следующего открытия
+                const iframe = document.getElementById('googleFormFrame');
+                if (iframe) {
+                    iframe.style.display = 'block';
+                }
+            }, 400); // Время должно совпадать с transition в CSS
         }
 
         // Отслеживание отправки Google Forms
         function startFormSubmitDetection(iframe) {
             let checkCount = 0;
-            const maxChecks = 120; // 2 минуты максимум
+            const maxChecks = 120;
             
             const checkInterval = setInterval(() => {
                 checkCount++;
                 
                 try {
-                    // Пытаемся получить доступ к содержимому iframe
                     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    
-                    // Проверяем наличие сообщения об успешной отправке
                     const confirmationText = iframeDoc.body.innerText || iframeDoc.body.textContent;
                     
-                    // Google Forms показывает текст благодарности после отправки
                     if (
                         confirmationText.includes('Ответ отправлен') || 
                         confirmationText.includes('Спасибо') || 
@@ -666,32 +696,23 @@
                         showSuccessAnimation();
                     }
                     
-                    // Также проверяем URL (Google Forms редиректит после отправки)
                     try {
                         const iframeUrl = iframe.contentWindow.location.href;
                         if (iframeUrl.includes('formResponse') || iframeUrl.includes('submitted')) {
                             clearInterval(checkInterval);
                             showSuccessAnimation();
                         }
-                    } catch (e) {
-                        // Не можем прочитать URL из-за кросс-доменных ограничений
-                        // Продолжаем проверку через содержимое
-                    }
+                    } catch (e) {}
                     
-                } catch (e) {
-                    // Не можем получить доступ к содержимому iframe (кросс-доменные ограничения)
-                    // Это нормально, продолжаем проверку
-                }
+                } catch (e) {}
                 
-                // Если прошло много времени, прекращаем проверку
                 if (checkCount >= maxChecks) {
                     clearInterval(checkInterval);
                 }
             }, 1000);
             
-            // Резервный способ: отслеживаем уход фокуса с iframe
+            // Резервная проверка при загрузке iframe
             iframe.addEventListener('load', function() {
-                // При каждой загрузке iframe проверяем
                 setTimeout(() => {
                     try {
                         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -708,23 +729,24 @@
                             clearInterval(checkInterval);
                             showSuccessAnimation();
                         }
-                    } catch (e) {
-                        // Кросс-доменные ограничения
-                    }
+                    } catch (e) {}
                 }, 500);
             });
         }
 
         // Показ анимации успешной отправки
         function showSuccessAnimation() {
-            const modalBody = document.getElementById('modalBody');
             const modalTitle = document.getElementById('modalTitle');
             const successAnimation = document.getElementById('successAnimation');
             const iframe = document.getElementById('googleFormFrame');
             
-            // Скрываем iframe
+            // Плавно скрываем iframe
             if (iframe) {
-                iframe.style.display = 'none';
+                iframe.style.transition = 'opacity 0.3s ease';
+                iframe.style.opacity = '0';
+                setTimeout(() => {
+                    iframe.style.display = 'none';
+                }, 300);
             }
             
             // Меняем заголовок

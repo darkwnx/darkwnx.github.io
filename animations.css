@@ -78,3 +78,13 @@
 .stat-value {
     animation: countUp 1s ease-out;
 }
+
+.modal-overlay.closing {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-overlay.closing .modal {
+    transform: scale(0.7) translateY(40px);
+    opacity: 0;
+}
